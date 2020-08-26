@@ -6,10 +6,16 @@
 
 ```C++
 typedef OneWire_R6LHL (Arduino_Board::nano328p, 10, 2) OneWire_D10;
-OneWire_D10 bus;
+OneWire_D10 bus0;
 ```
 где: 
 - Arduino_Board::nano328p - используемая плата Arduino;
 - 10 - номер цифрового пина платы Arduino;
 - 2 - количество устройств на шине;
   
+Для создания еще одной шины на другом пине, например 9, нужно написать:
+
+```C++
+typedef OneWire_R6LHL (Arduino_Board::nano328p, 9, 1) OneWire_D9;
+OneWire_D9 bus1;
+```
