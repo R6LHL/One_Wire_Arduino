@@ -1,24 +1,9 @@
 /* 
-* OneWire.h
+* OneWire_R6LHL.h
 *
 * Created: 20.04.2018 20:07:46
-* Author: tsv1986
-
-This a template class for working with 1-Wire bus
-in template<> section you must out addresses of 
-PIN, PORT, DDR registers of MCU in hex. Then you
-must put number of bit of MCU port and quantity
-of devices, that will be connected to the bus.
-
-void busReset(void) -	function is pulling down bus level for 480us, that means bus reset.
-						Then freeing bus for 50us and read state from bus. If the device on
-						the bus pulling bus level down - that means the bus is ok.
-						Interrupts are disabling and enabling if function;
-
-
-
+* Author: R6LHL
 */
-
 
 #ifndef __ONEWIRE_R6LHL_H__
 #define __ONEWIRE_R6LHL_H__
@@ -46,7 +31,7 @@ enum Arduino_Board
 	nano168p;
 }
 
-template <const unsigned char T_PIN, Arduino_Board T_BOARD, const unsigned char T_DEV_QUAN>
+//template <const unsigned char T_PIN, Arduino_Board T_BOARD, const unsigned char T_DEV_QUAN>
 class OneWire_R6LHL
 {
 //variables
@@ -76,6 +61,8 @@ private:
 		unsigned char device_id_buffer_[T_DEV_QUAN][_ROM_CODE_LENGHT_WITH_CRC];
 		
 		unsigned char T_BIT;
+		unsigned char T_PIN;
+		unsigned char T_DEV_QUAN;
 		
 		static const unsigned char _FAMILY_CODE_BYTE_NUMBER = 0;
 		static const unsigned char _FAMILY_CODE_LENGHT_BYTE = 1;
@@ -88,8 +75,14 @@ private:
 		
 //functions
 public:
-	OneWire()
+	OneWire(const unsigned char pin, Arduino_Board board, const unsigned char dev_q)
 	{
+		if (pin <= 19) T_PIN = pin;
+		else T_PIN = 0;
+		
+		if (dev_q <= 255) T_DEV_QUAN = dev_q;
+		else T_DEV_QUAN = 1;
+		
 		if (T_BOARD == nano328p)
 		{
 			if (T_PIN >= 0 && T_PIN <= 7 ) T_BIT = T_PIN;
