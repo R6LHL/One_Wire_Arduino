@@ -1,12 +1,11 @@
 # One_Wire_R6LHL
 
 ## Библиотека для работы с шиной 1-Wire. (пока только для ArduinoNano328p)
-Данная библиотека основана на шаблоне и позволяет создать несколько шин 1-Wire в одной прошивке.
+Данная библиотека позволяет создать несколько шин 1-Wire в одной прошивке.
 Для создания шины необходимо написать в глобальной секции, там, где объявляются переменные:
 
 ```C++
-typedef OneWire_R6LHL (Arduino_Board::nano328p, 10, 2) OneWire_D10;
-OneWire_D10 bus0;
+OneWire_R6LHL onewire_D10(Arduino_Board::nano328p, 10, 2);
 ```
 где: 
 - Arduino_Board::nano328p - используемая плата Arduino;
@@ -16,6 +15,5 @@ OneWire_D10 bus0;
 Для создания еще одной шины на другом пине, например 9, нужно написать:
 
 ```C++
-typedef OneWire_R6LHL (Arduino_Board::nano328p, 9, 1) OneWire_D9;
-OneWire_D9 bus1;
+OneWire_R6LHL onewire_D9(Arduino_Board::nano328p, 9, 1);
 ```
