@@ -111,37 +111,7 @@ inline unsigned char getError_(void)
 {
 	return error_;
 }
-		
-unsigned char readSlot_(void)
-{
-	unsigned char bit;
-	
-	digitalWrite(T_PIN, LOW); 	//*(volatile unsigned char*)(T_PORT) &= ~(1 << T_BIT);
-	pinMode(T_PIN,OUTPUT); 		// *(volatile unsigned char*)(T_DDR) |= (1 << T_BIT);  //master bus reset pulse
-	
-	_delay_us(1);
-	pinMode(T_PIN,INPUT);		// *(volatile unsigned char*)(T_DDR) &= ~(1 << T_BIT); //master makes bus free
-	
-	_delay_us(12);
-	bit = digitalRead(T_PIN);	// bit = *(volatile unsigned char*)(T_PIN);
-	bit =  bit & (1 << T_BIT);
-	bit = (bit >> T_BIT);
-	_delay_us(45);
-	return bit;
-}
-	
-	void init_memory_(void)
-	{
-		for (unsigned char device_counter = 0; device_counter < T_DEV_QUAN; device_counter++)
-		{
-			for (unsigned char byte_counter = 0; byte_counter < _ROM_CODE_LENGHT_WITH_CRC; byte_counter++)
-			{
-				device_id_buffer_[device_counter][byte_counter] = 0;
-				data_buffer_[byte_counter] = 0;
-			}
-		}
-	}
-	
+			
 void readROM_(void)
 {
 	busReset_();
@@ -413,6 +383,36 @@ void write1_toSlot_(void)
 	_delay_us(45);
 }
 
+unsigned char readSlot_(void)
+{
+	unsigned char bit;
+	
+	digitalWrite(T_PIN, LOW); 	//*(volatile unsigned char*)(T_PORT) &= ~(1 << T_BIT);
+	pinMode(T_PIN,OUTPUT); 		// *(volatile unsigned char*)(T_DDR) |= (1 << T_BIT);  //master bus reset pulse
+	
+	_delay_us(1);
+	pinMode(T_PIN,INPUT);		// *(volatile unsigned char*)(T_DDR) &= ~(1 << T_BIT); //master makes bus free
+	
+	_delay_us(12);
+	bit = digitalRead(T_PIN);	// bit = *(volatile unsigned char*)(T_PIN);
+	bit =  bit & (1 << T_BIT);
+	bit = (bit >> T_BIT);
+	_delay_us(45);
+	return bit;
+}
+/*	
+void init_memory_(void)
+	{
+		for (unsigned char device_counter = 0; device_counter < T_DEV_QUAN; device_counter++)
+		{
+			for (unsigned char byte_counter = 0; byte_counter < _ROM_CODE_LENGHT_WITH_CRC; byte_counter++)
+			{
+				device_id_buffer_[device_counter][byte_counter] = 0;
+				data_buffer_[byte_counter] = 0;
+			}
+		}
+	}
+*/
 }; //OneWire
 
 #endif //__ONEWIRE_R6LHL_H__
