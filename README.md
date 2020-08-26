@@ -17,3 +17,32 @@ OneWire_R6LHL onewire_D10(Arduino_Board::nano328p, 10, 2);
 ```C++
 OneWire_R6LHL onewire_D9(Arduino_Board::nano328p, 9, 1);
 ```
+### Функции
+
+- ***Поиск устройств на шине***
+```C++
+void searchROM_(void); 
+```
+ Найденные ROM сохраняются в буфер:
+ 
+```C++
+private: 
+device_id_buffer_[device_counter][byte_counter];
+```
+- ***Выбор конкретного устройства***
+
+```C++ 
+void matchROM_(unsigned char device_number);
+```
+где device_number - номер устройства в буфере устройств device_id_buffer
+
+- ***Выбор всех устройств***
+
+```C++ 
+void skipROM_(void);
+```
+все устройства на шине переходят в активный режим и ждут команд.
+
+_!!!ВОЗМОЖЕН КОНФЛИКТ УСТРОЙСТВ ПРИ ПЕРЕДАЧЕ ДАННЫХ!!!_
+
+-
